@@ -337,7 +337,12 @@ export function BookingForm({ onBookingComplete }: BookingFormProps) {
                   mode="single"
                   selected={selectedDate}
                   onSelect={setSelectedDate}
-                  disabled={(date) => date < new Date() || date.getDay() === 0} // Disable past dates and Sundays
+                  disabled={(date) => {
+                    const today = new Date();
+                    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                    const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    return dateOnly < todayOnly || date.getDay() === 0;
+                  }}
                   initialFocus
                 />
               </PopoverContent>
